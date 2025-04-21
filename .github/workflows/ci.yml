@@ -32,3 +32,22 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+  
+      - name: Check for review approvals
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const pr = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number
+            });
+            const reviews = await github.rest.pulls.listReviews({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.data.number
+            });
+            const approved = reviews.data.filter(r => r.state === 'APPROVED');
+            if (approved.length === 0) {
+              core.setFailed('No approved code reviews.');
+            }
