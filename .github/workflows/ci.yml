@@ -51,3 +51,18 @@ jobs:
             if (approved.length === 0) {
               core.setFailed('No approved code reviews.');
             }
+
+      - name: Installing Cloc and counting lines of code
+        run: |
+          sudo apt-get install -y cloc
+          cloc src/ > cloc-report.txt
+          cat cloc-report.txt
+
+      - name: Running SonarQube analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
+          unzip sonar-scanner-cli-4.8.0.2856-linux.zip
+          export PATH=$PATH:$(pwd)/sonar-scanner-4.8.0.2856-linux/bin
+          sonar-scanner -Dsonar.token=$SONAR_TOKEN
