@@ -1,4 +1,4 @@
-name: Reviewdog
+name: Reviewdog Pipeline
 
 on:
   workflow_dispatch:
