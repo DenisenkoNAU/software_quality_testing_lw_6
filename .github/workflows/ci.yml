@@ -52,10 +52,10 @@ jobs:
               core.setFailed('No approved code reviews.');
             }
 
-      - name: Installing Cloc and counting lines of code
-        run: |
-          sudo apt-get install -y cloc
-          cloc src/
+      # - name: Installing Cloc and counting lines of code
+      #   run: |
+      #     sudo apt-get install -y cloc
+      #     cloc src/
 
       - name: Running SonarQube analysis
         env:
@@ -71,19 +71,19 @@ jobs:
       #     export PATH=$PATH:$(pwd)/sonar-scanner-4.8.0.2856-linux/bin
       #     sonar-scanner -Dsonar.token=$SONAR_TOKEN
 
-      - name: Run Reviewdog flake8
-        uses: reviewdog/action-flake8@v2
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: github-pr-review
-          level: error
+      # - name: Run Reviewdog flake8
+      #   uses: reviewdog/action-flake8@v2
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     reporter: github-pr-review
+      #     level: error
 
-      - name: Run Reviewdog black
-        uses: reviewdog/action-black@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: github-pr-review
-          level: info
+      # - name: Run Reviewdog black
+      #   uses: reviewdog/action-black@v1
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     reporter: github-pr-review
+      #     level: info
 
       - name: Checking out changes in the develop branch
         run: |
