@@ -79,3 +79,9 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           reporter: github-pr-review
           level: info
+
+      - name: Checking out changes in the develop branch
+        run: |
+          git checkout develop
+          git pull
+          git log --oneline --graph
