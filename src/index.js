@@ -2,4 +2,12 @@ function greet(name) {
   return `Hello, ${name}!`;
 }
 
-module.exports = greet;
+function testPR(name) {
+          return `testPR, ${name}!`    ;
+  const test;
+}
+
+module.exports = {
+  greet,
+  testPR,
+};
