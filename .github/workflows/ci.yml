@@ -6,43 +6,29 @@ on:
       - 'develop'
 
 jobs:
-  analysis:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # - name: Set up Java 17
-      #   uses: actions/setup-java@v3
-      #   with:
-      #     distribution: 'temurin'
-      #     java-version: '17'
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+  
+      - name: Install dependencies
+        run: npm install
 
-      - name: Running SonarQube analysis
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.1.0.4889-linux-x64.zip
-          unzip sonar-scanner-cli-7.1.0.4889-linux-x64.zip
-          export PATH=$PATH:$(pwd)/sonar-scanner-7.1.0.4889-linux-x64/bin
-          sonar-scanner -Dsonar.token=squ_85e1cc240055ef57e5c4f94238922f29dc93b08b
+      - name: Lint code with ESLint
+        run: npm run lint
 
-      # - name: Run Reviewdog flake8
-      #   uses: reviewdog/action-flake8@v2
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     reporter: github-pr-review
-      #     level: error
+      - name: Run tests with Jest
+        run: npm test
 
-      # - name: Run Reviewdog black
-      #   uses: reviewdog/action-black@v1
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     reporter: github-pr-review
-      #     level: info
-
-      # - name: Checking out changes in the develop branch
-      #   run: |
-      #     git checkout develop
-      #     git pull
-      #     git log --oneline --graph
+      - name: Run reviewdog with ESLint
+        uses: reviewdog/action-eslint@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          level: error

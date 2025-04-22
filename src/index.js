@@ -4,6 +4,7 @@ function greet(name) {
 
 function testPR(name) {
   return `testPR, ${name}!`;
+  const test;
 }
 
 module.exports = {
