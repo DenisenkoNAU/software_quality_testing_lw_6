@@ -60,11 +60,16 @@ jobs:
       - name: Running SonarQube analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
-          unzip sonar-scanner-cli-4.8.0.2856-linux.zip
-          export PATH=$PATH:$(pwd)/sonar-scanner-4.8.0.2856-linux/bin
-          sonar-scanner -Dsonar.token=$SONAR_TOKEN
+        run: cat $SONAR_TOKEN
+
+      # - name: Running SonarQube analysis
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #   run: |
+      #     wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
+      #     unzip sonar-scanner-cli-4.8.0.2856-linux.zip
+      #     export PATH=$PATH:$(pwd)/sonar-scanner-4.8.0.2856-linux/bin
+      #     sonar-scanner -Dsonar.token=$SONAR_TOKEN
 
       - name: Run Reviewdog flake8
         uses: reviewdog/action-flake8@v2
