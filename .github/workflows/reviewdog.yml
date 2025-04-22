@@ -9,20 +9,15 @@ jobs:
   reviewdog:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Перевірка змін у гілці develop
+        run: |
+          git fetch origin
+          git checkout origin/develop
+          git log --oneline --graph -n 20 > develop_changes.txt
+          cat develop_changes.txt
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Збереження develop log як артефакт
+        uses: actions/upload-artifact@v3
         with:
-          node-version: '20'
-  
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run reviewdog with ESLint
-        uses: reviewdog/action-eslint@v1
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          reporter: github-pr-check
-          level: info
+          name: develop-commits-log
+          path: develop_changes.txt
