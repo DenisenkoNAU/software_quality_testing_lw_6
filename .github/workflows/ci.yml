@@ -55,8 +55,7 @@ jobs:
       - name: Installing Cloc and counting lines of code
         run: |
           sudo apt-get install -y cloc
-          cloc src/ > cloc-report.txt
-          cat cloc-report.txt
+          cloc src/
 
       - name: Running SonarQube analysis
         env:
@@ -66,3 +65,17 @@ jobs:
           unzip sonar-scanner-cli-4.8.0.2856-linux.zip
           export PATH=$PATH:$(pwd)/sonar-scanner-4.8.0.2856-linux/bin
           sonar-scanner -Dsonar.token=$SONAR_TOKEN
+
+      - name: Run Reviewdog flake8
+        uses: reviewdog/action-flake8@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          level: error
+
+      - name: Run Reviewdog black
+        uses: reviewdog/action-black@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          level: info
