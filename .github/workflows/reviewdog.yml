@@ -17,7 +17,7 @@ jobs:
           cat develop_changes.txt
 
       - name: Збереження develop log як артефакт
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: develop-commits-log
           path: develop_changes.txt
