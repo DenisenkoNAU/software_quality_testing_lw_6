@@ -12,13 +12,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # - name: Set up Java 17
+      #   uses: actions/setup-java@v3
+      #   with:
+      #     distribution: 'temurin'
+      #     java-version: '17'
+
       - name: Running SonarQube analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
-          unzip sonar-scanner-cli-4.8.0.2856-linux.zip
-          export PATH=$PATH:$(pwd)/sonar-scanner-4.8.0.2856-linux/bin
+          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.1.0.4889-linux-x64.zip
+          unzip sonar-scanner-cli-7.1.0.4889-linux-x64.zip
+          export PATH=$PATH:$(pwd)/sonar-scanner-cli-7.1.0.4889-linux-x64/bin
           sonar-scanner -Dsonar.token=squ_85e1cc240055ef57e5c4f94238922f29dc93b08b
 
       # - name: Run Reviewdog flake8
