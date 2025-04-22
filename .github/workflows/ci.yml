@@ -24,7 +24,7 @@ jobs:
         run: |
           wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.1.0.4889-linux-x64.zip
           unzip sonar-scanner-cli-7.1.0.4889-linux-x64.zip
-          export PATH=$PATH:$(pwd)/sonar-scanner-cli-7.1.0.4889-linux-x64/bin
+          export PATH=$PATH:$(pwd)/sonar-scanner-7.1.0.4889-linux-x64/bin
           sonar-scanner -Dsonar.token=squ_85e1cc240055ef57e5c4f94238922f29dc93b08b
 
       # - name: Run Reviewdog flake8
