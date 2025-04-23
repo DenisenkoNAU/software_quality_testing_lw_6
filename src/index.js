@@ -2,4 +2,11 @@ function greet(name) {
   return `Hello, ${name}!`;
 }
 
-module.exports = greet;
+function testPR(name) {
+  return `testPR, ${name}!`;
+}
+
+module.exports = {
+  greet,
+  testPR,
+};
